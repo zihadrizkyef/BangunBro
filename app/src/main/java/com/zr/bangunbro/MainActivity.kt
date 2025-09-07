@@ -3,6 +3,7 @@ package com.zr.bangunbro
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -23,11 +24,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
+import com.zr.bangunbro.di.appModule
+import com.zr.bangunbro.di.useCaseModule
+import com.zr.bangunbro.di.viewModelModule
+import com.zr.bangunbro.ui.alarm_list.AlarmListScreen
+import com.zr.bangunbro.ui.tabwithpager.TabPage
+import com.zr.bangunbro.ui.tabwithpager.TabWithPager
 import com.zr.bangunbro.ui.theme.BangunBroTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.android.ext.koin.androidContext
+import org.koin.compose.KoinApplication
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -38,9 +49,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             BangunBroTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainScreen(innerPadding, ::setAlarm)
-                }
+                val tabList = listOf(
+                    TabPage("Alarm", { AlarmListScreen({}) }),
+                    TabPage("Jam", {}),
+                    TabPage("Stopwatch", {}),
+                )
+                TabWithPager(tabList)
             }
         }
 
@@ -112,12 +126,30 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Preview(showBackground = true)
+    @Preview(
+        showBackground = true,
+        device = Devices.NEXUS_7,
+        uiMode = Configuration.UI_MODE_NIGHT_YES
+    )
     @Composable
     fun MainScreenPreview() {
-        BangunBroTheme {
-            MainScreen(PaddingValues(), { true })
+        val context = LocalContext.current
+        KoinApplication(application = {
+            androidContext(context.applicationContext)
+            modules(
+                appModule,
+                useCaseModule,
+                viewModelModule,
+            )
+        }) {
+            BangunBroTheme {
+                val tabList = listOf(
+                    TabPage("Alarm", { AlarmListScreen({}) }),
+                    TabPage("Jam", {}),
+                    TabPage("Stopwatch", {}),
+                )
+                TabWithPager(tabList)
+            }
         }
     }
-
 }
