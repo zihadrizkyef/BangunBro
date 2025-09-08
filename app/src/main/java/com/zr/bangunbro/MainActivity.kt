@@ -50,7 +50,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             BangunBroTheme {
                 val tabList = listOf(
-                    TabPage("Alarm", { AlarmListScreen({}) }),
+                    TabPage("Alarm") {
+                        AlarmListScreen(
+                            onNavigationToDetail = {},
+                            onNavigationToAdd = {},
+                        )
+                    },
                     TabPage("Jam", {}),
                     TabPage("Stopwatch", {}),
                 )
@@ -60,8 +65,7 @@ class MainActivity : ComponentActivity() {
 
         if (!Settings.canDrawOverlays(this)) {
             val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                ("package:$packageName").toUri()
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION, ("package:$packageName").toUri()
             )
             startActivity(intent)
         }
@@ -79,10 +83,7 @@ class MainActivity : ComponentActivity() {
         if (canSchedule) {
             val intent = Intent(this, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE
+                this, 0, intent, PendingIntent.FLAG_IMMUTABLE
             )
 
             val alarmInfo = AlarmManager.AlarmClockInfo(
@@ -112,24 +113,20 @@ class MainActivity : ComponentActivity() {
         Column(modifier = Modifier.padding(innerPadding)) {
             Text("Can schedule : ${canSchedule ?: ""}")
             Button(
-                enabled = canSchedule == null,
-                onClick = {
+                enabled = canSchedule == null, onClick = {
                     canSchedule = onSetAlarm()
                     lifecycleScope.launch {
                         delay(10_000)
                         canSchedule = null
                     }
-                }
-            ) {
+                }) {
                 Text("Set Alarm for next 10 seconds")
             }
         }
     }
 
     @Preview(
-        showBackground = true,
-        device = Devices.NEXUS_7,
-        uiMode = Configuration.UI_MODE_NIGHT_YES
+        showBackground = true, device = Devices.NEXUS_7, uiMode = Configuration.UI_MODE_NIGHT_YES
     )
     @Composable
     fun MainScreenPreview() {
@@ -144,7 +141,12 @@ class MainActivity : ComponentActivity() {
         }) {
             BangunBroTheme {
                 val tabList = listOf(
-                    TabPage("Alarm", { AlarmListScreen({}) }),
+                    TabPage("Alarm") {
+                        AlarmListScreen(
+                            onNavigationToDetail = {},
+                            onNavigationToAdd = {},
+                        )
+                    },
                     TabPage("Jam", {}),
                     TabPage("Stopwatch", {}),
                 )

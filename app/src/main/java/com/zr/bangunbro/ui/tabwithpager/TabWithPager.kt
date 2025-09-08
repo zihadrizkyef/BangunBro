@@ -1,8 +1,8 @@
 package com.zr.bangunbro.ui.tabwithpager
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TabRow
@@ -20,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
@@ -83,7 +81,8 @@ fun Tab(
         )
     ) {
         Text(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(50.dp)
                 .wrapContentHeight(Alignment.CenterVertically),
             text = title,
@@ -96,6 +95,7 @@ fun Tab(
 @Preview(
     showBackground = true,
     device = Devices.NEXUS_7,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun TabWithPagerPreview() {
@@ -105,7 +105,7 @@ fun TabWithPagerPreview() {
         modules(appModule, useCaseModule, viewModelModule)
     }) {
         val tabList = listOf(
-            TabPage("Alarm", { AlarmListScreen({}) }),
+            TabPage("Alarm", { AlarmListScreen({}, {}) }),
             TabPage("Jam", {}),
             TabPage("Stopwatch", {}),
             TabPage("Pengatur Waktu", {}),
