@@ -12,10 +12,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,8 +30,9 @@ import com.zr.bangunbro.di.appModule
 import com.zr.bangunbro.di.useCaseModule
 import com.zr.bangunbro.di.viewModelModule
 import com.zr.bangunbro.ui.alarm_list.AlarmListScreen
-import com.zr.bangunbro.ui.tabwithpager.TabPage
-import com.zr.bangunbro.ui.tabwithpager.TabWithPager
+import com.zr.bangunbro.ui.components.tabwithpager.TabPage
+import com.zr.bangunbro.ui.components.tabwithpager.TabWithPager
+import com.zr.bangunbro.ui.navigation.AlarmApp
 import com.zr.bangunbro.ui.theme.BangunBroTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -49,17 +48,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             BangunBroTheme {
-                val tabList = listOf(
-                    TabPage("Alarm") {
-                        AlarmListScreen(
-                            onNavigationToDetail = {},
-                            onNavigationToAdd = {},
-                        )
-                    },
-                    TabPage("Jam", {}),
-                    TabPage("Stopwatch", {}),
-                )
-                TabWithPager(tabList)
+                AlarmApp()
             }
         }
 
@@ -140,17 +129,7 @@ class MainActivity : ComponentActivity() {
             )
         }) {
             BangunBroTheme {
-                val tabList = listOf(
-                    TabPage("Alarm") {
-                        AlarmListScreen(
-                            onNavigationToDetail = {},
-                            onNavigationToAdd = {},
-                        )
-                    },
-                    TabPage("Jam", {}),
-                    TabPage("Stopwatch", {}),
-                )
-                TabWithPager(tabList)
+                AlarmApp()
             }
         }
     }

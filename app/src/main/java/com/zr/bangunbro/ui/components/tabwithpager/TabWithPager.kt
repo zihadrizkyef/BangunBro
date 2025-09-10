@@ -1,4 +1,4 @@
-package com.zr.bangunbro.ui.tabwithpager
+package com.zr.bangunbro.ui.components.tabwithpager
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
