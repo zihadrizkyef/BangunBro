@@ -29,9 +29,6 @@ import androidx.core.net.toUri
 import com.zr.bangunbro.di.appModule
 import com.zr.bangunbro.di.useCaseModule
 import com.zr.bangunbro.di.viewModelModule
-import com.zr.bangunbro.ui.alarm_list.AlarmListScreen
-import com.zr.bangunbro.ui.components.tabwithpager.TabPage
-import com.zr.bangunbro.ui.components.tabwithpager.TabWithPager
 import com.zr.bangunbro.ui.navigation.AlarmApp
 import com.zr.bangunbro.ui.theme.BangunBroTheme
 import kotlinx.coroutines.delay

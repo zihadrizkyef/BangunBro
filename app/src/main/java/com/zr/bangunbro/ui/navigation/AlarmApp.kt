@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.zr.bangunbro.ui.CreateAlarmScreen
-import com.zr.bangunbro.ui.DetailAlarmScreen
+import com.zr.bangunbro.ui.create_alarm.CreateAlarmScreen
+import com.zr.bangunbro.ui.detail_alarm.DetailAlarmScreen
 import com.zr.bangunbro.ui.home.HomeScreen
 
 @Composable
@@ -16,28 +16,28 @@ fun AlarmApp() {
 
     NavHost(
         navController,
-        startDestination = "home",
+        startDestination = Screen.Home.route,
     ) {
-        composable("home") {
+        composable(Screen.Home.route) {
             HomeScreen(
                 onNavigationToDetail = { alarmId ->
-                    navController.navigate("detail-alarm/$alarmId")
+                    navController.navigate(Screen.DetailAlarm.createRoute(alarmId))
                 },
                 onNavigationToAdd = {
-                    navController.navigate("create-alarm")
+                    navController.navigate(Screen.CreateAlarm.route)
                 }
             )
         }
-        composable("create-alarm") {
+        composable(Screen.CreateAlarm.route) {
             CreateAlarmScreen(
                 onBack = { navController.popBackStack() }
             )
         }
         composable(
-            route = "detail-alarm/{alarmId}",
-            arguments = listOf(navArgument("alarmId") { type = NavType.LongType })
-        ) { backstackEntry ->
-            val alarmId = backstackEntry.arguments?.getLong("alarmId") ?: 0L
+            route = Screen.DetailAlarm.route,
+            arguments = listOf(navArgument(ArgumentKey.ALARM_ID) { type = NavType.LongType })
+        ) { backStackEntry ->
+            val alarmId = backStackEntry.arguments?.getLong(ArgumentKey.ALARM_ID) ?: 0
             DetailAlarmScreen(
                 alarmId = alarmId,
                 onBack = { navController.popBackStack() }
